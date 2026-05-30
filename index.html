@@ -366,14 +366,6 @@ let last = {};
 let txTime;
 
 function updateReceiver(){
-
-const ex =
-document.getElementById("ex").value;
-
-document.getElementById("receiverId").innerText =
-receiverIDs[ex];
-
-}
 function generateRef() {
     let ref;
 
@@ -386,7 +378,12 @@ function generateRef() {
 
     usedRefs.add(ref);
     return ref;
-  }
+const ex =
+document.getElementById("ex").value;
+
+document.getElementById("receiverId").innerText =
+receiverIDs[ex];
+  
 async function convert(){
 
 if(
