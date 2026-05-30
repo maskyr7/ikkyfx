@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IKKY EXCHANGE PRO</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+
+body{
+background:#070b14;
+color:white;
+overflow-x:hidden;
+}
+
+/* GRID BACKGROUND */
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:
+linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+background-size:40px 40px;
+animation:gridMove 12s linear infinite;
+z-index:-1;
+}
+
+@keyframes gridMove{from{transform:translateY(0)}to{transform:translateY(40px)}}
+
+/* HEADER */
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 16px;
+background:#0f172a;
+border-bottom:1px solid rgba(255,255,255,.05);
+position:sticky;
+top:0;
+}
+
+.logo{
+font-weight:900;
+color:#4de1ff;
+letter-spacing:1px;
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.badge{
+font-size:10px;
+padding:3px 8px;
+background:rgba(0,255,180,.15);
+border:1px solid rgba(0,255,180,.4);
+border-radius:20px;
+color:#00ffb4;
+animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+from{box-shadow:0 0 5px #00ffb4;}
+to{box-shadow:0 0 15px #00ffb4;}
+}
+
+.profile{
+width:42px;
+height:42px;
+border-radius:50%;
+border:2px solid #4de1ff;
+object-fit:cover;
+}
+
+/* TICKER */
+.ticker{
+background:#0b1220;
+padding:6px 10px;
+font-size:11px;
+color:#94a3b8;
+overflow:hidden;
+white-space:nowrap;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.ticker span{
+display:inline-block;
+padding-left:100%;
+animation:scroll 12s linear infinite;
+}
+
+@keyframes scroll{
+0%{transform:translateX(0)}
+100%{transform:translateX(-100%)}
+}
+
+/* CONTAINER */
+.container{max-width:430px;margin:auto;padding:15px;}
+
+.card{
+background:#0f172a;
+padding:14px;
+border-radius:14px;
+margin-bottom:12px;
+border:1px solid rgba(255,255,255,.06);
+}
+
+/* INPUT */
+label{font-size:12px;color:#94a3b8;margin-top:10px;display:block}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:6px;
+border-radius:10px;
+border:none;
+background:#07101f;
+color:white;
+outline:none;
+}
+
+button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#4de1ff;
+font-weight:800;
+margin-top:12px;
+cursor:pointer;
+transition:.2s;
+}
+button:active{transform:scale(.98)}
+
+/* RECEIVER */
+.receiver{
+background:#07101f;
+padding:10px;
+border-radius:10px;
+margin-top:10px;
+font-size:12px;
+}
+
+.blur{
+font-size:10px;
+color:#64748b;
+}
+
+/* RESULT */
+.result{
+text-align:center;
+font-size:22px;
+font-weight:900;
+color:#4de1ff;
+margin-top:10px;
+transition:.3s;
+}
+
+/* RECEIPT */
+.receipt{
+display:none;
+background:white;
+color:black;
+padding:12px;
+border-radius:10px;
+font-size:12px;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+margin:4px 0;
+}
+
+.title{
+text-align:center;
+font-weight:800;
+margin-bottom:8px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<div class="logo">
+IKKY EXCHANGE <span class="badge">✔ VERIFIED</span>
+</div>
+<img class="profile" src="https://i.pravatar.cc/100?img=12">
+</div>
+
+<div class="ticker">
+<span>🚀 IKKY EXCHANGE SYSTEM • FAST CONVERT USDT • REAL TIME RATE • SAFE & VERIFIED ADMIN SYSTEM •</span>
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<label>Exchange</label>
+<select id="ex" onchange="updateReceiver()">
+<option>Binance</option>
+<option>Bitget</option>
+<option>MEXC</option>
+<option>OKX</option>
+</select>
+
+<div class="receiver">
+<b>📥 RECEIVER ADMIN</b>
+<div class="blur">ADMIN VERIFIED SYSTEM</div>
+<div>ID: <span id="receiverId"></span></div>
+</div>
+
+<label>ID Pengirim</label>
+<input id="sid" placeholder="Masukkan ID akun exchange">
+
+<label>Nama Pengirim</label>
+<input id="sname" placeholder="Nama sesuai exchange">
+
+<label>USDT</label>
+<input type="number" id="usdt" placeholder="Contoh: 10">
+
+<button onclick="convert()">CONVERT</button>
+
+<div class="result" id="result">Rp 0</div>
+
+</div>
+
+<div class="card">
+
+<div class="receipt" id="receipt">
+
+<div class="title">💰 TRANSACTION RECEIPT</div>
+
+<div class="row"><b>ID</b><span id="tid"></span></div>
+<div class="row"><b>REF</b><span id="tref"></span></div>
+<div class="row"><b>STATUS</b><span>PENDING</span></div>
+
+<hr>
+
+<div class="row"><b>EXCHANGE</b><span id="tex"></span></div>
+<div class="row"><b>USER ID</b><span id="tsid"></span></div>
+<div class="row"><b>NAME</b><span id="tsname"></span></div>
+
+<hr>
+
+<div class="row"><b>USDT</b><span id="tusdt"></span></div>
+<div class="row"><b>RATE</b><span id="trate"></span></div>
+<div class="row"><b>FEE</b><span>Rp 500</span></div>
+<div class="row"><b>TOTAL</b><span id="ttotal"></span></div>
+
+</div>
+
+<button onclick="sendWA()">KIRIM WHATSAPP</button>
+
+</div>
+
+</div>
+
+<script>
+
+const receiverIDs={
+Binance:"929443451",
+Bitget:"6397357978",
+MEXC:"32871600",
+OKX:"589469267746480492"
+};
+
+let used=new Set();
+let last={};
+let rate=17000;
+let ref="";
+
+function updateReceiver(){
+document.getElementById("receiverId").innerText=
+receiverIDs[document.getElementById("ex").value];
+}
+
+function makeRef(){
+let r;
+do{
+r="REF-"+Math.random().toString(36).substring(2,6).toUpperCase()+Date.now().toString(36).slice(-4).toUpperCase();
+}while(used.has(r));
+used.add(r);
+return r;
+}
+
+async function convert(){
+
+let usdt=parseFloat(usdt=document.getElementById("usdt").value||0);
+if(!usdt) return alert("Isi USDT");
+
+try{
+let res=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=idr");
+let d=await res.json();
+rate=d.tether.idr||17000;
+}catch{}
+
+let feeRate=usdt<=1?0.06:0.04;
+let base=usdt*rate;
+let fee=base*feeRate+500;
+let total=Math.floor(base-fee);
+
+ref=makeRef();
+
+let id="IKKY-"+Math.floor(Math.random()*999999);
+
+last={id,ref,total,usdt};
+
+document.getElementById("receipt").style.display="block";
+
+document.getElementById("tid").innerText=id;
+document.getElementById("tref").innerText=ref;
+document.getElementById("tex").innerText=document.getElementById("ex").value;
+document.getElementById("tsid").innerText=document.getElementById("sid").value;
+document.getElementById("tsname").innerText=document.getElementById("sname").value;
+document.getElementById("tusdt").innerText=usdt;
+document.getElementById("trate").innerText=rate;
+document.getElementById("ttotal").innerText="Rp "+total;
+
+document.getElementById("result").innerText="Rp "+total;
+
+}
+
+function sendWA(){
+
+let msg=`💰 IKKY EXCHANGE ✔ VERIFIED
+━━━━━━━━━━━━━━
+📥 TRANSACTION RECEIPT
+ID: ${last.id}
+REF: ${last.ref}
+STATUS: PENDING
+━━━━━━━━━━━━━━
+📤 PENGIRIM
+ID: ${document.getElementById("sid").value}
+A/N: ${document.getElementById("sname").value}
+━━━━━━━━━━━━━━
+📊 DETAIL
+USDT: ${last.usdt}
+TOTAL: Rp ${last.total}
+━━━━━━━━━━━━━━
+📌 CATATAN:
+Harap kirim screenshot bukti transaksi dari exchange
+ke admin untuk proses verifikasi.
+
+⚠️ Transaksi akan diproses setelah diverifikasi.`;
+
+window.open("https://wa.me/62881010250186?text="+encodeURIComponent(msg));
+
+}
+
+updateReceiver();
+
+</script>
+
+</body>
+</html>
