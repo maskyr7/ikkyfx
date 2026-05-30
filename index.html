@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IKKY EXCHANGE</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#070b14;
+color:white;
+overflow-x:hidden;
+}
+
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:
+linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+background-size:40px 40px;
+animation:gridMove 12s linear infinite;
+z-index:-1;
+}
+
+@keyframes gridMove{
+from{transform:translateY(0)}
+to{transform:translateY(40px)}
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px;
+background:#0f172a;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.logo{
+font-weight:800;
+color:#4de1ff;
+}
+
+.profile{
+width:46px;
+height:46px;
+border-radius:50%;
+object-fit:cover;
+border:2px solid #4de1ff;
+box-shadow:0 0 20px rgba(77,225,255,.6);
+}
+
+.container{
+max-width:420px;
+margin:auto;
+padding:15px;
+}
+
+.card{
+background:#0f172a;
+padding:15px;
+border-radius:16px;
+margin-bottom:12px;
+border:1px solid rgba(255,255,255,.06);
+}
+
+.hero{
+font-size:12px;
+line-height:1.7;
+color:#cbd5e1;
+}
+
+.hero h3{
+color:#4de1ff;
+margin-bottom:10px;
+}
+
+label{
+display:block;
+font-size:12px;
+margin-top:10px;
+color:#94a3b8;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:6px;
+border:none;
+border-radius:12px;
+background:#07101f;
+color:white;
+outline:none;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:12px;
+border:none;
+border-radius:12px;
+background:#4de1ff;
+font-weight:700;
+cursor:pointer;
+}
+
+.result{
+text-align:center;
+font-size:24px;
+font-weight:800;
+color:#4de1ff;
+margin-top:12px;
+}
+
+.receiver{
+margin-top:12px;
+padding:12px;
+background:#07101f;
+border-radius:12px;
+font-size:12px;
+line-height:1.7;
+}
+
+.receipt{
+display:none;
+background:white;
+color:black;
+padding:12px;
+border-radius:12px;
+font-size:12px;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+margin:5px 0;
+}
+
+.receipt-title{
+text-align:center;
+font-weight:700;
+margin-bottom:10px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<div class="logo">IKKY EXCHANGE PRO</div>
+<img src="./profile.png" class="profile">
+</div>
+
+<div class="container">
+
+<div class="card hero">
+
+<h3>🚀 Selamat Datang di IKKY EXCHANGE</h3>
+
+💹 Konversi USDT ke IDR secara cepat dan mudah.
+
+<br><br>
+
+📌 Petunjuk:
+<br><br>
+
+1. Pilih exchange pengirim.
+<br>
+
+2. Isi ID Exchange kamu.
+<br>
+
+3. Isi nama akun exchange kamu.
+<br>
+
+4. Masukkan jumlah USDT.
+<br>
+
+5. Klik Convert.
+<br>
+
+6. Kirim screenshot bukti transfer ke admin untuk verifikasi.
+
+<br><br>
+
+⚠️ Pastikan data pengirim sesuai akun exchange yang digunakan.
+
+</div>
+
+<div class="card">
+
+<label>Exchange</label>
+
+<select id="ex" onchange="updateReceiver()">
+<option>Binance</option>
+<option>Bitget</option>
+<option>MEXC</option>
+<option>OKX</option>
+</select>
+
+<div class="receiver">
+
+<b>📥 DATA PENERIMA</b>
+<hr style="opacity:.2;margin:8px 0">
+
+<div>ID Penerima</div>
+<div id="receiverId">929443451</div>
+
+<br>
+
+<div>A/N</div>
+<div>Lucky Wahyu Mukti</div>
+
+</div>
+
+<label>ID Pengirim</label>
+<input
+id="sid"
+placeholder="Contoh: 123456789">
+
+<label>Nama Pengirim</label>
+<input
+id="sname"
+placeholder="Contoh: bambang subroto">
+
+<label>Jumlah USDT</label>
+<input
+type="number"
+id="usdt"
+placeholder="Masukkan jumlah USDT">
+
+<button onclick="convert()">
+Convert
+</button>
+
+<div class="result" id="result">
+Rp 0
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="receipt" id="receipt">
+
+<div class="receipt-title">
+💰 TRANSACTION RECEIPT
+</div>
+
+<div class="row">
+<b>Status</b>
+<span style="
+background:#fff3cd;
+color:#856404;
+padding:4px 8px;
+border-radius:20px;
+font-size:11px;
+font-weight:700;
+">
+PENDING
+</span>
+</div>
+
+<div class="row">
+<b>ID Transaksi</b>
+<span id="tid"></span>
+</div>
+
+<div class="row">
+<b>Ref</b>
+<span id="tref"></span>
+</div>
+
+<div class="row">
+<b>Tanggal</b>
+<span id="tdate"></span>
+</div>
+
+<hr>
+
+<div class="row">
+<b>Exchange</b>
+<span id="tex"></span>
+</div>
+
+<div class="row">
+<b>ID Pengirim</b>
+<span id="tsenderid"></span>
+</div>
+
+<div class="row">
+<b>A/N Pengirim</b>
+<span id="tsendername"></span>
+</div>
+
+<hr>
+
+<div class="row">
+<b>ID Penerima</b>
+<span id="texid"></span>
+</div>
+
+<div class="row">
+<b>A/N Penerima</b>
+<span>Lucky Wahyu Mukti</span>
+</div>
+
+<hr>
+
+<div class="row">
+<b>USDT</b>
+<span id="tusdt"></span>
+</div>
+
+<div class="row">
+<b>Rate</b>
+<span id="trate"></span>
+</div>
+
+<div class="row">
+<b>Fee</b>
+<span>Rp 500</span>
+</div>
+
+<div class="row">
+<b>Total IDR</b>
+<span id="ttotal"></span>
+</div>
+
+<hr>
+
+<div style="font-size:11px;text-align:center;color:#666;">
+Harap simpan bukti transaksi hingga proses selesai.
+</div>
+
+</div>
+
+<button onclick="sendWA()">
+Kirim ke WhatsApp
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+const receiverIDs = {
+Binance:"929443451",
+Bitget:"6397357978",
+MEXC:"32871600",
+OKX:"589469267746480492"
+};
+
+let rate = 17000;
+let last = {};
+let txTime;
+
+function updateReceiver(){
+
+const ex =
+document.getElementById("ex").value;
+
+document.getElementById("receiverId").innerText =
+receiverIDs[ex];
+
+}
+
+function convert(){
+
+if(
+!document.getElementById("sid").value ||
+!document.getElementById("sname").value
+){
+alert("Lengkapi data pengirim");
+return;
+}
+
+const usdt =
+parseFloat(document.getElementById("usdt").value)||0;
+
+if(usdt<=0){
+alert("Masukkan jumlah USDT");
+return;
+}
+txTime = new Date().toLocaleString("id-ID");
+const ex =
+document.getElementById("ex").value;
+
+const receiverId =
+receiverIDs[ex];
+
+const fee = 500;
+
+const total = (usdt * rate) - fee;
+const ref = "REF" + Date.now();
+document.getElementById("tref").innerText = ref;
+
+const trx =
+"IKKY-" +
+Math.floor(
+100000 + Math.random()*900000
+);
+
+last = {
+  id: trx,
+  ref: ref,
+  date: txTime,
+  ex: ex,
+  receiverId: receiverId,
+  usdt: usdt,
+  fee: fee,
+  total: total
+};
+
+document.getElementById("result").innerText =
+"Rp " +
+Math.floor(total).toLocaleString("id-ID");
+
+document.getElementById("tid").innerText = trx;
+
+document.getElementById("tdate").innerText = txTime;
+
+document.getElementById("tex").innerText = ex;
+
+document.getElementById("tsenderid").innerText =
+document.getElementById("sid").value;
+
+document.getElementById("tsendername").innerText =
+document.getElementById("sname").value;
+
+document.getElementById("texid").innerText =
+receiverId;
+
+document.getElementById("tusdt").innerText =
+usdt + " USDT";
+
+document.getElementById("trate").innerText =
+"Rp " + rate.toLocaleString("id-ID");
+
+document.getElementById("ttotal").innerText =
+"Rp " +
+Math.floor(total).toLocaleString("id-ID");
+
+document.getElementById("receipt").style.display =
+"block";
+
+}
+
+function sendWA(){
+
+if(!last.id){
+alert("Silakan convert terlebih dahulu");
+return;
+}
+
+let msg =
+`💰 IKKY EXCHANGE SYSTEM
+━━━━━━━━━━━━━━
+📥 TRANSACTION RECEIPT
+ID TRANSAKSI : ${last.id}
+REFERENSI    : ${last.ref}
+TANGGAL      : ${last.date}
+EXCHANGE     : ${last.ex}
+━━━━━━━━━━━━━━
+📤 PENGIRIM
+ID           : ${document.getElementById("sid").value}
+A/N          : ${document.getElementById("sname").value}
+
+━━━━━━━━━━━━━━
+📊 DETAIL
+USDT         : ${last.usdt}
+RATE         : Rp ${rate.toLocaleString("id-ID")}
+FEE          : Rp 500
+TOTAL        : Rp ${Math.floor(last.total).toLocaleString("id-ID")}
+━━━━━━━━━━━━━━
+📥 PENERIMA
+ID           : ${last.receiverId}
+A/N          : Lucky Wahyu Mukti
+━━━━━━━━━━━━━━
+📌 CATATAN
+Harap kirim screenshot dari exchange
+ke admin untuk proses verifikasi
+
+Status: PENDING CONFIRMATION`;
+
+window.open(
+"https://wa.me/62881010250186?text="+
+encodeURIComponent(msg)
+);
+
+}
+
+updateReceiver();
+
+</script>
+
+</body>
+</html>
