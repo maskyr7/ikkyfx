@@ -233,7 +233,7 @@ color:#888;
 <div style="margin-top:10px;padding:10px;background:#07101f;border-radius:10px;">
 <div class="small">ADMIN VERIFIED RECEIVER</div>
 <div id="receiverId">-</div>
-    <hr>
+    
 <div class="meta-box">
     </div>
     <div style="margin-top:4px;">
@@ -278,7 +278,7 @@ color:#888;
   <div style="margin-top:4px;">
     <b>A/N:</b>
     <span id="receiverNameText">
-      Lucky Wahyu Mukti <span class="verified-badge">✔ VERIFIED</span>
+    </span>Lucky Wahyu Mukti <span class="verified-badge">✔ VERIFIED</span>
     </span>
   </div>
 </div>
@@ -385,7 +385,8 @@ let total = Math.floor(base - percentCut - adminFee);
 
 let ref = makeRef();
 let id = "IKKY-" + Math.floor(Math.random()*999999);
-
+let ex = document.getElementById("ex").value;
+let receiverId = receiver[ex];
 let now = new Date();
 let tanggal = now.toLocaleString("id-ID", {
   dateStyle: "full",
@@ -415,11 +416,6 @@ alert("Convert dulu");
 return;
 }
 
-let ex = document.getElementById("ex").value;
-let receiverId = receiver[ex];
-
-
-});
 let msg = `🏦 IKKY EXCHANGE - OFFICIAL INVOICE
 ━━━━━━━━━━━━━━━━━━━━━━
 
