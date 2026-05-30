@@ -353,7 +353,11 @@ if(isNaN(usdt) || usdt <= 0){
   alert("Masukkan USDT yang valid");
   return;
     }
-
+let now = new Date();
+let tanggal = now.toLocaleString("id-ID", {
+  dateStyle: "full",
+  timeStyle: "short"
+});
 try{
 let res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=idr");
 let data = await res.json();
@@ -381,7 +385,8 @@ let total = Math.floor(base - percentCut - adminFee);
 
 let ref = makeRef();
 let id = "IKKY-" + Math.floor(Math.random()*999999);
-
+let ex = document.getElementById("ex").value;
+let receiverId = receiver[ex];
 last = {id,ref,ex,sid,sname,usdt,total,tanggal};
 
 document.getElementById("tid").innerText = id;
@@ -402,13 +407,6 @@ if(!last.id){
 alert("Convert dulu");
 return;
 }
- let ex = document.getElementById("ex").value;
-let receiverId = receiver[ex]; 
-    let now = new Date();
-let tanggal = now.toLocaleString("id-ID", {
-  dateStyle: "full",
-  timeStyle: "short"
-});
 
 
 let msg = `🏦 IKKY EXCHANGE - OFFICIAL INVOICE
