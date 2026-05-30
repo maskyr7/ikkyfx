@@ -349,10 +349,10 @@ let sid = document.getElementById("sid").value;
 let sname = document.getElementById("sname").value;
 let usdt = parseFloat(document.getElementById("usdt").value);
 
-if(!sid || !sname || !usdt){
-alert("Lengkapi data");
-return;
-}
+if(isNaN(usdt) || usdt <= 0){
+  alert("Masukkan USDT yang valid");
+  return;
+    }
 
 try{
 let res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=idr");
@@ -392,9 +392,7 @@ document.getElementById("tsname").innerText = sname;
 document.getElementById("tusdt").innerText = usdt;
 document.getElementById("trate").innerText = rate;
 document.getElementById("ttotal").innerText = "Rp " + total.toLocaleString();
-
-document.getElementById("result").innerText = "Rp " + total.toLocaleString();
-
+animateBalance(document.getElementById("result"), 0, total, 800);
 document.getElementById("receipt").style.display = "block";
 }
 
