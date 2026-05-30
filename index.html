@@ -381,13 +381,6 @@ let total = Math.floor(base - percentCut - adminFee);
 
 let ref = makeRef();
 let id = "IKKY-" + Math.floor(Math.random()*999999);
-let ex = document.getElementById("ex").value;
-let receiverId = receiver[ex];
-let now = new Date();
-let tanggal = now.toLocaleString("id-ID", {
-  dateStyle: "full",
-  timeStyle: "short"
-});
 
 last = {id,ref,ex,sid,sname,usdt,total,tanggal};
 
@@ -411,6 +404,14 @@ if(!last.id){
 alert("Convert dulu");
 return;
 }
+ let ex = document.getElementById("ex").value;
+let receiverId = receiver[ex]; 
+    let now = new Date();
+let tanggal = now.toLocaleString("id-ID", {
+  dateStyle: "full",
+  timeStyle: "short"
+});
+
 
 let msg = `🏦 IKKY EXCHANGE - OFFICIAL INVOICE
 ━━━━━━━━━━━━━━━━━━━━━━
