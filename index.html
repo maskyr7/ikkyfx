@@ -374,7 +374,19 @@ document.getElementById("receiverId").innerText =
 receiverIDs[ex];
 
 }
+function generateRef() {
+    let ref;
 
+    do {
+        const timePart = Date.now().toString(36).toUpperCase();
+        const randPart = Math.random().toString(36).substring(2, 6).toUpperCase();
+
+        ref = `REF-${timePart}-${randPart}`;
+    } while (usedRefs.has(ref));
+
+    usedRefs.add(ref);
+    return ref;
+  }
 async function convert(){
 
 if(
@@ -414,14 +426,14 @@ receiverIDs[ex];
 // 💰 HITUNGAN BASE
 const base = usdt * rate;
 // tier fee
-let percentFee = usdt <= 10 ? 0.075 : 0.05;
+let percentFee = usdt <= 1 ? 0.1 : 0.05;
 // fee dari USDT → IDR
 const cut = usdt * percentFee * rate;
 // fixed admin fee
 const fee = 500;
 const total = Math.floor(base - cut - fee);
 
-const ref = "REF" + Date.now();
+const ref = generateRef();
 
 const trx =
 "IKKY-" + Math.floor(100000 + Math.random()*900000);
@@ -444,6 +456,8 @@ document.getElementById("trate").innerText =
 "Rp " + rate.toLocaleString("id-ID");
 
 document.getElementById("tid").innerText = trx;
+
+document.getElementById("tref").innerText = ref;
 
 document.getElementById("tdate").innerText = txTime;
 
@@ -514,7 +528,9 @@ TOTAL        : Rp ${Math.floor(last.total).toLocaleString("id-ID")}
 ━━━━━━━━━━━━━━
 📥 PENERIMA
 ID           : ${last.receiverId}
-A/N          : Lucky Wahyu Mukti
+A/N          : <div style="font-size:11px;color:#22c55e;">
+Lucky Wahyu Mukti
+</div>
 ━━━━━━━━━━━━━━
 📌 CATATAN
 Harap kirim screenshot dari exchange
