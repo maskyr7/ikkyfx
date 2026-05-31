@@ -287,6 +287,8 @@ style="display:none;margin-top:10px;padding:10px;background:#07101f;border-radiu
 </div>  
 </div>  
   
+<div id="exchangeForm" style="display:none;">  
+  
 <label>ID Pengirim</label>  
 <input id="sid" placeholder="ID exchange kamu">  
   
@@ -295,6 +297,7 @@ style="display:none;margin-top:10px;padding:10px;background:#07101f;border-radiu
   
 <label>USDT</label>  
 <input id="usdt" type="number" placeholder="0">  
+  
 <button id="convertBtn" onclick="convert()">CONVERT</button>  
   
 <div class="result" id="result">Rp 0</div>  
@@ -525,15 +528,40 @@ function animateBalance(element, start, end, duration) {
 }  
 function setReceiver(){  
   
+// reset transaksi lama  
+last = {};  
+  
+document.getElementById("receipt").style.display = "none";  
+document.getElementById("waBtn").style.display = "none";  
+document.getElementById("result").innerText = "Rp 0";  
+  
+// bersihkan isi receipt lama  
+document.getElementById("tid").innerText = "";  
+document.getElementById("tref").innerText = "";  
+document.getElementById("tex").innerText = "";  
+document.getElementById("tsid").innerText = "";  
+document.getElementById("tsname").innerText = "";  
+document.getElementById("tusdt").innerText = "";  
+document.getElementById("trate").innerText = "";  
+document.getElementById("ttotal").innerText = "";  
+  
 let ex = document.getElementById("ex").value;  
   
 if(!ex){  
+  
 document.getElementById("receiverBox").style.display = "none";  
+document.getElementById("exchangeForm").style.display = "none";  
+  
 return;  
 }  
   
-  
 document.getElementById("receiverBox").style.display = "block";  
+document.getElementById("exchangeForm").style.display = "block";  
+  
+// kosongkan form lama  
+document.getElementById("sid").value = "";  
+document.getElementById("sname").value = "";  
+document.getElementById("usdt").value = "";  
   
 document.getElementById("receiverId").innerText =  
 receiver[ex];  
@@ -687,19 +715,27 @@ let walletLast = {};
   
 function walletSelected(){  
   
+walletLast = {};  
+  
+document.getElementById("walletReceipt").style.display = "none";  
+  
+document.getElementById("walletResult").innerText = "Rp 0";  
+  
+document.getElementById("wid").innerText = "";  
+document.getElementById("wref").innerText = "";  
+document.getElementById("wwallet").innerText = "";  
+document.getElementById("wusdt").innerText = "";  
+document.getElementById("wrate").innerText = "";  
+document.getElementById("wtotal").innerText = ""; 
+  
 let wallet =  
 document.getElementById("walletOption").value;  
   
-document.getElementById("walletForm")  
-.style.display =  
+document.getElementById("walletForm").style.display =  
 wallet ? "block" : "none";  
   
-document.getElementById("miniInfo")  
-.style.display =  
-wallet === "minipay"  
-? "block"  
-: "none";  
-  
+document.getElementById("miniInfo").style.display =  
+wallet === "minipay" ? "block" : "none";  
 }  
   
 async function convertWallet(){  
@@ -866,7 +902,15 @@ encodeURIComponent(msg)
 );  
   
 }  
+window.onload = () => {  
   
+document.getElementById("exchangeForm").style.display = "none";  
+  
+document.getElementById("receiverBox").style.display = "none";  
+  
+document.getElementById("walletForm").style.display = "none";  
+  
+};  
 </script>  
   
 </body>  
