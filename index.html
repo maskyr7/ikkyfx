@@ -1,0 +1,917 @@
+<!DOCTYPE html>  
+<html lang="id">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>IKKY EXCHANGE PRO</title>  
+  
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">  
+  
+<style>  
+.verified-badge{  
+display:inline-flex;  
+align-items:center;  
+gap:4px;  
+font-size:10px;  
+font-weight:700;  
+color:#22c55e;  
+padding:2px 6px;  
+border-radius:6px;  
+background:rgba(34,197,94,0.12);  
+border:1px solid rgba(34,197,94,0.4);  
+animation:pulseGlow 1.5s infinite ease-in-out;  
+}  
+  
+@keyframes pulseGlow{  
+0%{box-shadow:0 0 3px rgba(34,197,94,0.3);}  
+50%{box-shadow:0 0 10px rgba(34,197,94,0.8);}  
+100%{box-shadow:0 0 3px rgba(34,197,94,0.3);}  
+}  
+  
+.meta-box{  
+font-size:10px;  
+color:#94a3b8;  
+margin:8px 0 12px 0;  
+line-height:1.4;  
+  
+}  
+.meta-box hr{  
+border:0;  
+height:1px;  
+background:#e5e7eb;  
+margin:8px 0;  
+opacity:0.6;  
+  
+}  
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}  
+  
+body{  
+background:#070b14;  
+color:#fff;  
+overflow-x:hidden;  
+}  
+  
+body::before{  
+content:"";  
+position:fixed;  
+inset:0;  
+background:  
+linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),  
+linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);  
+background-size:40px 40px;  
+animation:gridMove 12s linear infinite;  
+z-index:-1;  
+}  
+  
+@keyframes gridMove{  
+from{transform:translateY(0)}  
+to{transform:translateY(40px)}  
+}  
+  
+/* HEADER */  
+.header{  
+display:flex;  
+justify-content:space-between;  
+align-items:center;  
+padding:15px;  
+background:#0f172a;  
+border-bottom:1px solid rgba(255,255,255,.05);  
+}  
+  
+.logo{  
+font-weight:800;  
+color:#4de1ff;  
+display:flex;  
+align-items:center;  
+gap:8px;  
+}  
+  
+.logo span{  
+animation:blink 1.5s infinite;  
+}  
+  
+@keyframes blink{  
+50%{opacity:.4}  
+}  
+  
+/* PROFILE */  
+.profile-wrap{  
+display:flex;  
+align-items:center;  
+gap:10px;  
+}  
+  
+.profile{  
+width:40px;  
+height:40px;  
+border-radius:50%;  
+border:2px solid #4de1ff;  
+object-fit:cover;  
+animation:pop .8s ease;  
+}  
+  
+@keyframes pop{  
+from{transform:scale(0)}  
+to{transform:scale(1)}  
+}  
+  
+/* TICKER */  
+.ticker{  
+background:#0b1220;  
+padding:8px;  
+overflow:hidden;  
+white-space:nowrap;  
+border-bottom:1px solid rgba(255,255,255,.05);  
+}  
+  
+.ticker span{  
+display:inline-block;  
+padding-left:100%;  
+animation:scroll 10s linear infinite;  
+color:#4de1ff;  
+font-size:12px;  
+}  
+  
+@keyframes scroll{  
+0%{transform:translateX(0)}  
+100%{transform:translateX(-100%)}  
+}  
+  
+.container{max-width:420px;margin:auto;padding:15px;}  
+  
+.card{  
+background:#0f172a;  
+padding:15px;  
+border-radius:16px;  
+margin-bottom:12px;  
+}  
+  
+label{font-size:12px;color:#94a3b8;}  
+  
+input,select{  
+width:100%;  
+padding:12px;  
+margin-top:6px;  
+border:none;  
+border-radius:10px;  
+background:#07101f;  
+color:#fff;  
+}  
+  
+button{  
+width:100%;  
+padding:12px;  
+margin-top:12px;  
+border:none;  
+border-radius:10px;  
+background:#4de1ff;  
+font-weight:700;  
+cursor:pointer;  
+}  
+  
+.result{  
+text-align:center;  
+font-size:22px;  
+margin-top:10px;  
+color:#4de1ff;  
+font-weight:800;  
+}  
+  
+/* RECEIPT */  
+.receipt{  
+display:none;  
+background:#fff;  
+color:#000;  
+padding:12px;  
+border-radius:12px;  
+font-size:12px;  
+margin-top:10px;  
+}  
+  
+.row{display:flex;justify-content:space-between;margin:4px 0;}  
+  
+.badge{  
+background:#22c55e;  
+color:#fff;  
+padding:2px 6px;  
+border-radius:6px;  
+font-size:10px;  
+}  
+.small{  
+font-size:10px;  
+color:#888;  
+}  
+  
+.menu-tabs{  
+display:flex;  
+margin:15px;  
+background:#0f172a;  
+border-radius:12px;  
+overflow:hidden;  
+}  
+  
+.menu-tab{  
+flex:1;  
+padding:12px;  
+text-align:center;  
+cursor:pointer;  
+font-weight:700;  
+color:#94a3b8;  
+}  
+  
+.menu-tab.active{  
+background:#4de1ff;  
+color:#000;  
+}  
+  
+.tab-content{  
+display:none;  
+}  
+  
+.tab-content.active{  
+display:block;  
+}  
+</style>  
+</head>  
+  
+<body>  
+  
+<div class="header">  
+<div class="logo">IKKY EXCHANGE <span>✔</span></div>  
+  
+<div class="profile-wrap">  
+<img src="./profile.png" class="profile">  
+</div>  
+</div>  
+  
+<div class="ticker">  
+<span>IKKY EXCHANGE • FAST CONVERT • SECURE SYSTEM • REAL TIME RATE • VERIFIED ADMIN •</span>  
+</div>  
+<div class="menu-tabs">  
+  <div class="menu-tab active" onclick="showTab('exchange',this)">  
+      💱 EXCHANGE  
+  </div>  
+  
+  <div class="menu-tab" onclick="showTab('wallet',this)">  
+      👛 WALLET  
+  </div>  
+</div>  
+<div class="container">  
+  
+<div id="exchange" class="tab-content active">  
+  
+<div class="card">  
+  
+<label>Exchange</label>  
+<select id="ex" onchange="setReceiver()">  
+<option value="">Pilih Exchange</option>  
+<option value="Binance">Binance</option>  
+<option value="Bitget">Bitget</option>  
+<option value="MEXC">MEXC</option>  
+<option value="OKX">OKX</option>  
+</select>  
+  
+<div id="receiverBox"  
+style="display:none;margin-top:10px;padding:10px;background:#07101f;border-radius:10px;">  
+<div class="small">ADMIN VERIFIED RECEIVER</div>  
+<div id="receiverId" style="font-size:15px;font-weight:700;">  
+  -  
+</div>  
+  
+<div class="small" style="margin-top:4px;">  
+  A/N  
+</div>  
+<div id="receiverNameText" class="small">  
+  Lucky Wahyu Mukti  
+  <span class="verified-badge">✔ VERIFIED</span>  
+</div>  
+</div>  
+  
+<div id="exchangeForm" style="display:none;">  
+  
+<label>ID Pengirim</label>  
+<input id="sid" placeholder="ID exchange kamu">  
+  
+<label>Nama Pengirim</label>  
+<input id="sname" placeholder="Nama akun kamu">  
+  
+<label>USDT</label>  
+<input id="usdt" type="number" placeholder="0">  
+  
+<button id="convertBtn" onclick="convert()">CONVERT</button>  
+  
+<div class="result" id="result">Rp 0</div>  
+  
+</div>  
+<div class="card" id="receipt" style="display:none;">  
+  
+<div style="text-align:center;font-weight:700;margin-bottom:8px;">  
+💰 TRANSACTION RECEIPT 💰  
+</div>  
+<div class="row"><b>ID TRANSAKSI</b><span id="tid"></span></div>  
+<div class="row"><b>REF</b><span id="tref"></span></div>  
+  
+<div class="row">  
+  <b>Status</b>  
+  <span class="badge">PENDING</span>  
+</div>  
+<div class="meta-box">  
+  <div><b>ID PENERIMA:</b> <span id="receiverIdText"></span></div>  
+  
+  <div style="margin-top:4px;">  
+    <b>A/N:</b>  
+   <span>  
+  Lucky Wahyu Mukti  
+  <span class="verified-badge">✔</span>  
+</span>  
+  </div>  
+</div>  
+<div class="row"><b>EXCHANGE</b><span id="tex"></span></div>  
+<div class="row"><b>ID PENGIRIM</b><span id="tsid"></span></div>  
+<div class="row"><b>NAMA</b><span id="tsname"></span></div>  
+  
+<hr>  
+  
+<div class="row"><b>USDT</b><span id="tusdt"></span></div>  
+<div class="row"><b>RATE + FEE</b><span id="trate"></span></div>  
+<div class="row"><b>FEE ADMIN</b><span>Rp 500</span></div>  
+<div class="row"><b>TOTAL</b><span id="ttotal"></span></div>  
+  
+<hr>  
+  
+<div style="font-size:11px;text-align:center;color:#666;">  
+Harap simpan bukti transaksi hingga proses selesai.  
+</div>  
+  
+</div> <!-- receipt -->  
+  
+<button id="waBtn"  
+onclick="sendWA()"  
+style="display:none;">  
+KIRIM WA  
+</button>  
+  
+</div> <!-- exchange -->  
+  
+<div id="wallet" class="tab-content">  
+  
+<div class="card">  
+  
+<label>Wallet</label>  
+  
+<select id="walletOption" onchange="walletSelected()">  
+<option value="">Pilih Wallet</option>  
+<option value="xrocket">Xrocket</option>  
+<option value="cryptobot">Cryptobot</option>  
+<option value="minipay">Minipay</option>  
+</select>  
+  
+</div>  
+  
+<div id="walletForm" style="display:none;">  
+  
+<div class="card">  
+  
+<label>USDT</label>  
+<input id="walletUsdt" type="number" placeholder="0">  
+  
+<div id="miniInfo" style="display:none;">  
+  
+<div style="margin-top:10px;padding:10px;background:#07101f;border-radius:10px;">  
+  
+<div class="small">MINIPAY RECEIVER</div>  
+  
+<div style="font-weight:700;">  
+0881010250186  
+</div>  
+  
+<div class="small">  
+USDT BEP20  
+</div>  
+  
+<div style="word-break:break-all;">  
+0xaefdd506311b34ae3ff215345b17818934e426fe  
+</div>  
+  
+</div>  
+  
+</div>  
+<button onclick="convertWallet()">  
+CONVERT  
+</button>  
+  
+<div class="result" id="walletResult">  
+Rp 0  
+  
+</div>  
+  
+</div>  
+  
+<div class="card" id="walletReceipt" style="display:none;">  
+  
+<div style="text-align:center;font-weight:700;">  
+💰 WALLET RECEIPT 💰  
+</div>  
+  
+<div class="row">  
+<b>ID TRANSAKSI</b>  
+<span id="wid"></span>  
+</div>  
+  
+<div class="row">  
+<b>REF</b>  
+<span id="wref"></span>  
+</div>  
+  
+<div class="row">  
+<b>STATUS</b>  
+<span class="badge">PENDING</span>  
+</div>  
+  
+<div class="row">  
+<b>WALLET</b>  
+<span id="wwallet"></span>  
+</div>  
+  
+<div id="miniReceiptInfo" style="display:none;">  
+  
+<hr>  
+  
+<div class="row">  
+<b>ID RECEIVER</b>  
+<span>0881010250186</span>  
+</div>  
+  
+<div class="row">  
+<b>A/N</b>  
+<span>Lucky Wahyu Mukti</span>  
+</div>  
+  
+<div style="font-size:11px;margin-top:5px;">  
+0xaefdd506311b34ae3ff215345b17818934e426fe  
+</div>  
+  
+</div>  
+  
+<hr>  
+  
+<div class="row">  
+<b>USDT</b>  
+<span id="wusdt"></span>  
+</div>  
+  
+<div class="row">  
+<b>RATE+FEE</b>  
+<span id="wrate"></span>  
+</div>  
+<div class="row">  
+<b>FEE ADMIN</b>  
+<span>Rp 500</span>  
+</div>  
+<div class="row">  
+<b>TOTAL</b>  
+<span id="wtotal"></span>  
+</div>  
+  
+<button onclick="sendWalletReceipt()">  
+KIRIM WA  
+</button>  
+  
+</div> <!-- walletReceipt -->  
+  
+</div> <!-- wallet -->  
+  
+</div> <!-- container -->  
+<script>  
+function showTab(tab, el){  
+  
+document.querySelectorAll('.tab-content')  
+.forEach(x => x.classList.remove('active'));  
+  
+document.querySelectorAll('.menu-tab')  
+.forEach(x => x.classList.remove('active'));  
+  
+document.getElementById(tab)  
+.classList.add('active');  
+  
+el.classList.add('active');  
+  
+}  
+  
+const receiver = {  
+Binance:"929443451",  
+Bitget:"6397357978",  
+MEXC:"32871600",  
+OKX:"589469267746480492"  
+};  
+  
+let last = {};  
+let rate = 17000;  
+  
+function animateBalance(element, start, end, duration) {  
+  let startTime = null;  
+  
+  function step(currentTime) {  
+    if (!startTime) startTime = currentTime;  
+  
+    let progress = Math.min((currentTime - startTime) / duration, 1);  
+    let value = Math.floor(progress * (end - start) + start);  
+  
+    element.innerText = "Rp " + value.toLocaleString();  
+  
+    if (progress < 1) {  
+      requestAnimationFrame(step);  
+    }  
+  }  
+  
+  requestAnimationFrame(step);  
+}  
+function setReceiver(){  
+  
+// reset transaksi lama  
+last = {};  
+  
+document.getElementById("receipt").style.display = "none";  
+document.getElementById("waBtn").style.display = "none";  
+document.getElementById("result").innerText = "Rp 0";  
+  
+// bersihkan isi receipt lama  
+document.getElementById("tid").innerText = "";  
+document.getElementById("tref").innerText = "";  
+document.getElementById("tex").innerText = "";  
+document.getElementById("tsid").innerText = "";  
+document.getElementById("tsname").innerText = "";  
+document.getElementById("tusdt").innerText = "";  
+document.getElementById("trate").innerText = "";  
+document.getElementById("ttotal").innerText = "";  
+  
+let ex = document.getElementById("ex").value;  
+  
+if(!ex){  
+  
+document.getElementById("receiverBox").style.display = "none";  
+document.getElementById("exchangeForm").style.display = "none";  
+  
+return;  
+}  
+  
+document.getElementById("receiverBox").style.display = "block";  
+document.getElementById("exchangeForm").style.display = "block";  
+  
+// kosongkan form lama  
+document.getElementById("sid").value = "";  
+document.getElementById("sname").value = "";  
+document.getElementById("usdt").value = "";  
+  
+document.getElementById("receiverId").innerText =  
+receiver[ex];  
+  
+document.getElementById("receiverIdText").innerText =  
+receiver[ex];  
+  
+}  
+  
+function makeRef(){  
+return "REF-" + Math.random().toString(36).substr(2,8).toUpperCase();  
+}  
+  
+async function convert(){  
+document.getElementById("receipt").style.display = "none";  
+let sid = document.getElementById("sid").value;  
+let sname = document.getElementById("sname").value;  
+let usdt = parseFloat(document.getElementById("usdt").value);  
+let ex = document.getElementById("ex").value;  
+  
+if(!ex){  
+alert("Pilih Exchange dulu");  
+return;  
+}  
+if(!sid || !sname || isNaN(usdt) || usdt <= 0){  
+alert("Lengkapi data");  
+return;  
+}  
+  
+try{  
+let res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=idr");  
+let data = await res.json();  
+rate = data.tether.idr;  
+}catch(e){ rate=17000; }  
+  
+let percentFee;  
+  
+// tier fee berdasarkan USDT  
+if(usdt >= 0.1 && usdt <= 1){  
+    percentFee = 0.06; // 6%  
+}else{  
+    percentFee = 0.04; // 4%  
+}  
+// base conversion  
+let base = usdt * rate;  
+// fee percentage dari USD ke IDR  
+let percentCut = base * percentFee;  
+// admin fee fix  
+let adminFee = 500;  
+// total akhir  
+let total = Math.floor(base - percentCut - adminFee);  
+  
+let ref = makeRef();  
+let id = "IKKY-" + Math.floor(Math.random()*999999);  
+  
+let now = new Date();  
+let tanggal = now.toLocaleString("id-ID", {  
+  dateStyle: "full",  
+  timeStyle: "short"  
+});  
+  
+last = {id,ref,ex,sid,sname,usdt,total,tanggal};  
+  
+document.getElementById("tid").innerText = id;  
+document.getElementById("tref").innerText = ref;  
+document.getElementById("tex").innerText = ex;  
+document.getElementById("tsid").innerText = sid;  
+document.getElementById("tsname").innerText = sname;  
+document.getElementById("tusdt").innerText = usdt;  
+document.getElementById("trate").innerText =  
+"Rp " + Number(rate).toLocaleString("id-ID");  
+document.getElementById("ttotal").innerText = "Rp " + total.toLocaleString();  
+  
+await new Promise(resolve => setTimeout(resolve, 1500));  
+  
+document.getElementById("result").innerHTML =  
+"🔄 Fetching Live Rate...";  
+await new Promise(resolve => setTimeout(resolve, 1000));  
+  
+document.getElementById("result").innerHTML =  
+"💱 Converting USDT...";  
+await new Promise(resolve => setTimeout(resolve, 1000));  
+  
+document.getElementById("result").innerHTML =  
+"✅ Success";  
+await new Promise(resolve => setTimeout(resolve, 500));  
+  
+animateBalance(  
+  document.getElementById("result"),  
+  0,  
+  total,  
+  1200  
+);  
+  
+await new Promise(resolve => setTimeout(resolve, 1200));  
+  
+document.getElementById("receipt").style.display = "block";  
+document.getElementById("waBtn").style.display = "block";  
+}  
+  
+function sendWA(){  
+  
+if(!last.id){  
+alert("Convert dulu");  
+return;  
+}  
+  
+let ex = document.getElementById("ex").value;  
+let receiverId = receiver[ex];  
+  
+  
+  
+let msg = `🏦 IKKY EXCHANGE - OFFICIAL INVOICE  
+━━━━━━━━━━━━━━━━━━━━━━  
+📄 TRANSACTION DETAILS  
+ID TRANSAKSI : ${last.id}  
+REF NUMBER   : ${last.ref}  
+STATUS       : PENDING VERIFICATION  
+📅 DATE        : ${last.tanggal}  
+━━━━━━━━━━━━━━━━━━━━━━  
+👤 SENDER  
+ID           : ${last.sid}  
+NAME         : ${last.sname}  
+━━━━━━━━━━━━━━━━━━━━━━  
+🏦 RECEIVER (ADMIN)  
+ID           : ${receiverId}  
+ACCOUNT NAME : Lucky Wahyu Mukti  
+━━━━━━━━━━━━━━━━━━━━━━  
+💱 TRANSACTION SUMMARY  
+ASSET        : USDT  
+AMOUNT       : ${last.usdt}  
+RATE         : Rp ${Number(rate).toLocaleString("id-ID")}  
+FEE          : Rp 500  
+TOTAL AMOUNT : Rp ${last.total}  
+━━━━━━━━━━━━━━━━━━━━━━  
+📌 NOTICE:  
+Harap simpan bukti transaksi ini.  
+Transaksi akan diproses setelah verifikasi admin.  
+━━━━━━━━━━━━━━━━━━━━━━  
+📌 INSTRUKSI VERIFIKASI  
+Harap kirim screenshot bukti transaksi dari exchange  
+ke admin untuk proses verifikasi.  
+━━━━━━━━━━━━━━━━━━━━━━  
+✔ IKKY EXCHANGE SYSTEM`;  
+  
+window.open("https://wa.me/62881010250186?text="+encodeURIComponent(msg));  
+}  
+  
+// setReceiver();  
+let walletLast = {};  
+  
+function walletSelected(){  
+  
+walletLast = {};  
+  
+document.getElementById("walletReceipt").style.display = "none";  
+  
+document.getElementById("walletResult").innerText = "Rp 0";  
+  
+document.getElementById("wid").innerText = "";  
+document.getElementById("wref").innerText = "";  
+document.getElementById("wwallet").innerText = "";  
+document.getElementById("wusdt").innerText = "";  
+document.getElementById("wrate").innerText = "";  
+document.getElementById("wtotal").innerText = ""; 
+document.getElementById("walletUsdt").value = "";
+let wallet =  
+document.getElementById("walletOption").value;  
+  
+document.getElementById("walletForm").style.display =  
+wallet ? "block" : "none";  
+  
+document.getElementById("miniInfo").style.display =  
+wallet === "minipay" ? "block" : "none";  
+}  
+  
+async function convertWallet(){  
+  
+document.getElementById("walletReceipt")  
+.style.display = "none";  
+  
+document.getElementById("walletResult")  
+.innerHTML = "Rp 0";  
+  
+let wallet =  
+document.getElementById("walletOption").value;  
+let usdt =  
+parseFloat(  
+document.getElementById("walletUsdt").value  
+);  
+  
+if(!wallet || isNaN(usdt) || usdt <= 0){  
+alert("Isi USDT");  
+return;  
+}  
+  
+try{  
+  
+let res =  
+await fetch(  
+"https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=idr"  
+);  
+  
+let data =  
+await res.json();  
+  
+rate = data.tether.idr;  
+  
+}catch(e){  
+  
+rate = 17000;  
+  
+}  
+  
+let percentFee;  
+  
+if(usdt >= 0.1 && usdt <= 1){  
+    percentFee = 0.08;  
+}else{  
+    percentFee = 0.06;  
+}  
+  
+let base = usdt * rate;  
+let percentCut = base * percentFee;  
+let adminFee = 500;  
+  
+let total =  
+Math.floor(base - percentCut - adminFee);  
+  
+walletLast = {  
+  
+wallet,  
+usdt,  
+total,  
+id:"WALLET-" + Math.floor(Math.random()*999999),  
+ref:makeRef()  
+  
+};  
+  
+document.getElementById("wid").innerText =  
+walletLast.id;  
+  
+document.getElementById("wref").innerText =  
+walletLast.ref;  
+  
+document.getElementById("wwallet").innerText =  
+wallet.toUpperCase();  
+  
+document.getElementById("wusdt").innerText =  
+usdt;  
+  
+document.getElementById("wrate").innerText =  
+"Rp " + Number(rate).toLocaleString("id-ID");  
+  
+document.getElementById("wtotal").innerText =  
+"Rp " + total.toLocaleString("id-ID");  
+  
+document.getElementById("miniReceiptInfo")  
+.style.display =  
+wallet === "minipay"  
+? "block"  
+: "none";  
+  
+// ANIMASI  
+document.getElementById("walletResult").innerHTML =  
+"🔄 Fetching Live Rate...";  
+await new Promise(r => setTimeout(r,1000));  
+  
+document.getElementById("walletResult").innerHTML =  
+"💱 Converting USDT...";  
+await new Promise(r => setTimeout(r,1000));  
+  
+document.getElementById("walletResult").innerHTML =  
+"✅ Success";  
+await new Promise(r => setTimeout(r,500));  
+  
+animateBalance(  
+document.getElementById("walletResult"),  
+0,  
+total,  
+1200  
+);  
+  
+await new Promise(r => setTimeout(r,1200));  
+  
+// TAMPILKAN RECEIPT  
+document.getElementById("walletReceipt")  
+.style.display = "block";  
+  
+}  
+  
+function sendWalletReceipt(){  
+  
+if(!walletLast.id){  
+alert("Convert dulu");  
+return;  
+}  
+  
+let msg = "";  
+  
+if(walletLast.wallet === "minipay"){  
+  
+msg =  
+`🏦 IKKY EXCHANGE - MINIPAY  
+  
+ID TRANSAKSI : ${walletLast.id}  
+REF : ${walletLast.ref}  
+  
+ID RECEIVER : 0881010250186  
+  
+USDT : ${walletLast.usdt}  
+  
+TOTAL : Rp ${walletLast.total}  
+  
+NOTE :  
+Jangan hapus pesan otomatis ini!`;  
+  
+}else{  
+  
+msg =  
+`Halo Admin  
+  
+Saya ingin tukar USDT ke IDR (${walletLast.wallet.toUpperCase()})  
+  
+USDT : ${walletLast.usdt}  
+  
+ID TRANSAKSI : ${walletLast.id}  
+  
+REF : ${walletLast.ref}  
+  
+Note : Jangan hapus pesan otomatis ini!`;  
+  
+}  
+  
+window.open(  
+"https://wa.me/62881010250186?text=" +  
+encodeURIComponent(msg)  
+);  
+  
+}  
+window.onload = () => {  
+  
+document.getElementById("exchangeForm").style.display = "none";  
+  
+document.getElementById("receiverBox").style.display = "none";  
+  
+document.getElementById("walletForm").style.display = "none";  
+  
+};  
+</script>  
+  
+</body>  
+</html>
