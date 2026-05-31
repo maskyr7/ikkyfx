@@ -715,30 +715,28 @@ let walletLast = {};
 
 function walletSelected(){
 
+console.log("walletSelected jalan");
+
+try{
+
 walletLast = {};
 
 document.getElementById("walletReceipt").style.display = "none";
 
 document.getElementById("walletResult").innerText = "Rp 0";
 
-document.getElementById("wid").innerText = "";
-document.getElementById("wref").innerText = "";
-document.getElementById("wwallet").innerText = "";
-document.getElementById("wusdt").innerText = "";
-document.getElementById("wrate").innerText = "";
-document.getElementById("wtotal").innerText = "";
-
-const walletUsdt = document.getElementById("walletUsdt");
-if(walletUsdt) walletUsdt.value = "";
-
-let wallet =
-document.getElementById("walletOption").value;
+let wallet = document.getElementById("walletOption").value;
 
 document.getElementById("walletForm").style.display =
 wallet ? "block" : "none";
 
 document.getElementById("miniInfo").style.display =
 wallet === "minipay" ? "block" : "none";
+
+}catch(err){
+
+console.error(err);
+
 }
 
 async function convertWallet(){
@@ -905,7 +903,17 @@ encodeURIComponent(msg)
 );
 
 }
+window.onload = () => {
 
+const exchangeForm = document.getElementById("exchangeForm");
+const receiverBox = document.getElementById("receiverBox");
+const walletForm = document.getElementById("walletForm");
+
+if(exchangeForm) exchangeForm.style.display = "none";
+if(receiverBox) receiverBox.style.display = "none";
+if(walletForm) walletForm.style.display = "none";
+
+};
 </script>
 
 </body>
