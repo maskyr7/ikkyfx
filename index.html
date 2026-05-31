@@ -527,7 +527,11 @@ function animateBalance(element, start, end, duration) {
   requestAnimationFrame(step);
 }
 function setReceiver(){
+function setReceiver(){
 
+console.log("SET RECEIVER DIPANGGIL");
+
+// reset transaksi lama
 last = {};
 
 document.getElementById("receipt").style.display = "none";
