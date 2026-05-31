@@ -715,27 +715,27 @@ let walletLast = {};
 
 function walletSelected(){
 
-console.log("walletSelected jalan");
-
-try{
-
+// reset data wallet lama
 walletLast = {};
 
-document.getElementById("walletReceipt").style.display = "none";
+document.getElementById("walletReceipt")
+.style.display = "none";
 
-document.getElementById("walletResult").innerText = "Rp 0";
+document.getElementById("walletResult")
+.innerText = "Rp 0";
 
-let wallet = document.getElementById("walletOption").value;
+let wallet =
+document.getElementById("walletOption").value;
 
-document.getElementById("walletForm").style.display =
+document.getElementById("walletForm")
+.style.display =
 wallet ? "block" : "none";
 
-document.getElementById("miniInfo").style.display =
-wallet === "minipay" ? "block" : "none";
-
-}catch(err){
-
-console.error(err);
+document.getElementById("miniInfo")
+.style.display =
+wallet === "minipay"
+? "block"
+: "none";
 
 }
 
